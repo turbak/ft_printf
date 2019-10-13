@@ -6,11 +6,11 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 15:34:08 by cauranus          #+#    #+#             */
-/*   Updated: 2019/09/11 23:11:50 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/13 15:28:06 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 int	ft_atoi(const char *str)
 {

@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swapfree.c                                      :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/17 18:23:17 by cauranus          #+#    #+#             */
-/*   Updated: 2019/09/19 17:33:22 by cauranus         ###   ########.fr       */
+/*   Created: 2019/09/07 15:06:20 by cauranus          #+#    #+#             */
+/*   Updated: 2019/10/13 15:28:06 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_swapfree(void **ptr, void *ptr2)
+void	ft_putstr(char const *s)
 {
-	void	*temp;
-
-	temp = ptr2;
-	free(*ptr);
-	*ptr = temp;
+	while (*s)
+	{
+		ft_putchar(*s);
+		s++;
+	}
 }

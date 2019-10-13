@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_islower.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/09 22:05:52 by cauranus          #+#    #+#             */
-/*   Updated: 2019/09/09 22:48:10 by cauranus         ###   ########.fr       */
+/*   Created: 2019/10/12 15:00:30 by cauranus          #+#    #+#             */
+/*   Updated: 2019/10/13 15:28:06 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_islower(int c)
+#include "ft_printf.h"
+
+void	ft_putnbr_unsigned(unsigned int n)
 {
-	if (c >= 97 && c <= 122)
-		return (1);
-	return (0);
+	if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
+	}
+	else
+		ft_putchar(n + '0');
 }

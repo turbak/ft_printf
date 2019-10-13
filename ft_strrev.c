@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/09 17:53:04 by cauranus          #+#    #+#             */
-/*   Updated: 2019/09/09 18:45:54 by cauranus         ###   ########.fr       */
+/*   Created: 2019/09/09 22:07:42 by cauranus          #+#    #+#             */
+/*   Updated: 2019/10/13 15:28:06 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
+char	*ft_strrev(char *s)
 {
-	del((*alst)->content, (*alst)->content_size);
-	free(*alst);
-	*alst = NULL;
+	size_t	j;
+	size_t	i;
+	char	rev;
+
+	i = ft_strlen(s);
+	j = 0;
+	--i;
+	while (i > j)
+	{
+		rev = s[j];
+		s[j] = s[i];
+		s[i] = rev;
+		j++;
+		i--;
+	}
+	return (s);
 }

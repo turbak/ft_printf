@@ -6,11 +6,11 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 15:09:34 by cauranus          #+#    #+#             */
-/*   Updated: 2019/09/09 20:32:53 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/13 15:28:06 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 void	ft_putnbr(int n)
 {

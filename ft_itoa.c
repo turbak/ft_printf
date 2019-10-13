@@ -6,11 +6,11 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 16:41:17 by cauranus          #+#    #+#             */
-/*   Updated: 2019/09/08 18:29:21 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/13 15:38:18 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 static void	itoa(char *str, long long nb, size_t i)
 {
