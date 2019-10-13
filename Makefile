@@ -8,7 +8,13 @@ FILES 		= 	ft_printf.c\
 				ft_putstr.c\
 				ft_strnew.c\
 				ft_strrev.c\
-				ft_strlen.c
+				ft_strlen.c\
+				ft_strjoin.c\
+				ft_swapfree.c\
+				put_int_unsigned.c\
+				struct_init.c\
+				put_int.c\
+				ft_itoa.c
 OBJ			= $(patsubst %.c, %.o, $(FILES))
 FLAGS		=  -Wall -Werror -Wextra
 HEADER		= ft_printf.h

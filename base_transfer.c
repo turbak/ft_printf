@@ -6,13 +6,13 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 10:45:09 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/12 15:49:11 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/13 20:04:45 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	base_10_trans(unsigned int n, int base)
+char	*base_10_trans(unsigned int n, int base)
 {
 	char			*str;
 	unsigned int 	i;
@@ -33,12 +33,11 @@ void	base_10_trans(unsigned int n, int base)
 		n /= base;
 	}
 	ft_strrev(str);
-	n = ft_atoi(str);
 	free(str);
-	ft_putnbr_unsigned(n);
+	return (str);
 }
 
-void	base_16_trans(int n, int up)
+void	base_16_trans(int n, int up, t_flags print)
 {
 	char			*str;
 	unsigned int 	i;
@@ -72,11 +71,10 @@ void	base_16_trans(int n, int up)
 			str[i++] = (up ? 'F' : 'f');
 		n /= 16;
 	}
-	ft_putstr(ft_strrev(str));
-	free(str);
+	put_int_unsigned(ft_strrev(str), print);
 }
 
-void	ft_putaddr(int n, int up)
+void	ft_putaddr(int n, int up, t_flags print)
 {
 	char			*str;
 	unsigned int 	i;
@@ -110,7 +108,6 @@ void	ft_putaddr(int n, int up)
 			str[i++] = (up ? 'F' : 'f');
 		n /= 16;
 	}
-	ft_putstr("0x10");
-	ft_putstr(ft_strrev(str));
-	free(str);
+	ft_swapfree((void**)&str, ft_strjoin(str, "0x10"));
+	put_int_unsigned(str, print);
 }
