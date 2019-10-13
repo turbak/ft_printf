@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 16:41:17 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/13 15:38:18 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/13 20:33:35 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char		*ft_itoa(int n)
 		buf = buf / 10;
 		i++;
 	}
-	if (!(str = (char *)malloc(sizeof(char) * (i + 1))))
+	if (!(str = (char *)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	str[i--] = '\0';
 	if (nb == 0)

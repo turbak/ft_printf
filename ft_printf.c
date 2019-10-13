@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:15 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/13 20:14:37 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/13 22:09:30 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ t_flags	parce(const char *format, int i)
 	while (format[i] != '%' ? format[i] != '%' : 0)
 		i--;
 	++i;
-	while (!(format[i] > '0' && format[i] <= '9'))
+	while (format[i] && !(format[i] > '0' && format[i] <= '9') && format[i] != '.' &&
+	(format[i] != 'i' && format[i] != 'd' && format[i]
+	!= 's' && format[i] != '%' && format[i] != 'c' && format[i] != 'p' &&
+	format[i] != 'o' && format[i] != 'u' && format[i] != 'u' && format[i]
+	!= 'x' && format[i] != 'X' && format[i] != 'f'))
 	{
 		if (format[i] == '-')
 			print.minus = 'A';
@@ -83,9 +87,12 @@ int		flag_mngr(va_list va, t_flags print)
 	else if (print.type == 'u')
 		put_int_unsigned(ft_itoa_unsigned((unsigned int)va_arg(va, unsigned int)), print);
 	else if (print.type == 's')
-		ft_putstr(va_arg(va, char *));
+		putst(va_arg(va, char *), print);
 	else if (print.type == '%')
+	{
+		g_count++;
 		ft_putchar('%');
+	}
 	else if (print.type == 'c')
 		ft_putchar(va_arg(va, int));
 	else if (print.type == 'p')
@@ -118,20 +125,23 @@ int		ft_printf(const char *format, ...)
 			flag_mngr(va, print);
 			i = print.index + 1;
 		}
-		write(1, &format[i], 1);
-		i++;
-		g_count++;
+		if (i < len && format[i] != '%')
+		{
+			write(1, &format[i], 1);
+			i++;
+			g_count++;
+		}
 	}
 	va_end(va);
 	return (g_count);
 }
 
-/*int		main(void)
+int		main(void)
 {
 	char *s;
 
 	s = "sda";
-	ft_printf("%s", "this is a string");
-	printf("%s", "this is a string");
+	ft_printf("[%+10.5d]", 4242);
+	printf("[%+10.5d]", 4242);
 	return (0);
-}*/
+}

@@ -14,7 +14,11 @@ FILES 		= 	ft_printf.c\
 				put_int_unsigned.c\
 				struct_init.c\
 				put_int.c\
-				ft_itoa.c
+				ft_itoa.c\
+				ft_memalloc.c\
+				ft_bzero.c\
+				putst.c
+				
 OBJ			= $(patsubst %.c, %.o, $(FILES))
 FLAGS		=  -Wall -Werror -Wextra
 HEADER		= ft_printf.h

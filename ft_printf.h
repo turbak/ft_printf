@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:30 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/13 19:58:50 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/13 20:49:59 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ void	put_int_unsigned(char *str, t_flags print);
 char	*ft_itoa_unsigned(unsigned int n);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_swapfree(void **ptr, void *ptr2);
+void	*ft_memalloc(size_t size);
+void	ft_bzero(void *s, size_t n);
+void	putst(char *str, t_flags print);
 
 #endif
