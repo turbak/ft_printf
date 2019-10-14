@@ -6,19 +6,14 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 19:25:29 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/13 20:30:43 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/14 21:45:11 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	itoa_uns(char *str, long long nb, size_t i)
+static void	itoa_uns(char *str, uintmax_t nb, uintmax_t i)
 {
-	if (nb < 0)
-	{
-		str[0] = '-';
-		nb = -nb;
-	}
 	while (nb > 0)
 	{
 		str[i] = nb % 10 + '0';
@@ -27,16 +22,16 @@ static void	itoa_uns(char *str, long long nb, size_t i)
 	}
 }
 
-char		*ft_itoa_unsigned(unsigned int n)
+char		*ft_itoa_unsigned(uintmax_t n)
 {
-	size_t				i;
-	unsigned long long	buf;
+	uintmax_t				i;
+	uintmax_t	buf;
 	char				*str;
-	unsigned long long	nb;
+	uintmax_t	nb;
 
-	nb = (unsigned long long)n;
-	i = (nb > 0 ? 0 : 1);
-	buf = (nb > 0 ? nb : -nb);
+	nb = (uintmax_t)n;
+	i = 0;
+	buf = nb;
 	while (buf > 0)
 	{
 		buf = buf / 10;
@@ -66,7 +61,7 @@ void	put_int_unsigned(char *str, t_flags print)
 	{
 		while (i < len)
 		{
-			write(1, str, 1);
+			write(1, &str[i], 1);
 			i++;
 			print.width--;
 			g_count++;
@@ -91,7 +86,7 @@ void	put_int_unsigned(char *str, t_flags print)
 		}
 		while (i < len)
 		{
-			write(1, str, 1);
+			write(1, &str[i], 1);
 			i++;
 			g_count++;
 		}

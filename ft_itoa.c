@@ -6,35 +6,36 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 16:41:17 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/13 20:33:35 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/14 21:51:05 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	itoa(char *str, long long nb, size_t i)
+static void	itoa(char *str, intmax_t nb, size_t i, uintmax_t buf)
 {
+	buf = (nb > 0 ? nb : -nb);
 	if (nb < 0)
 	{
 		str[0] = '-';
-		nb = -nb;
+		buf = -nb;
 	}
-	while (nb > 0)
+	while (buf > 0)
 	{
-		str[i] = nb % 10 + '0';
+		str[i] = buf % 10 + '0';
 		i--;
-		nb /= 10;
+		buf /= 10;
 	}
 }
 
-char		*ft_itoa(int n)
+char		*ft_itoa(intmax_t n)
 {
 	size_t		i;
-	long long	buf;
+	uintmax_t	buf;
 	char		*str;
-	long long	nb;
+	intmax_t	nb;
 
-	nb = (long long)n;
+	nb = (intmax_t)n;
 	i = (nb > 0 ? 0 : 1);
 	buf = (nb > 0 ? nb : -nb);
 	while (buf > 0)
@@ -50,6 +51,6 @@ char		*ft_itoa(int n)
 		str[0] = '0';
 		return (str);
 	}
-	itoa(str, nb, i);
+	itoa(str, nb, i, buf);
 	return (str);
 }
