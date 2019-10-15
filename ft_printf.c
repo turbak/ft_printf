@@ -6,12 +6,20 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:15 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 17:19:41 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 20:28:06 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
+
+int		charcheck(char c)
+{
+	return (c != 'i' && c != 'd' && c != 's' && c != 'S'
+	&& c != '%' && c != 'c' && c != 'p' && c != 'U' &&
+	c != 'o' && c != 'u' && c != 'u' && c != 'x' && c != 'C'
+	&& c != 'X' && c != 'f' && c != 'D' && c != 'O');
+}
 
 t_flags	parce(const char *format, int i)
 {
@@ -19,10 +27,7 @@ t_flags	parce(const char *format, int i)
 
 	print = init_print();
 	print.precision = 0;
-	while (format[i] && format[i] != 'i' && format[i] != 'd' && format[i]
-	!= 's' && format[i] != '%' && format[i] != 'c' && format[i] != 'p' &&
-	format[i] != 'o' && format[i] != 'u' && format[i] != 'u' && format[i]
-	!= 'x' && format[i] != 'X' && format[i] != 'f')
+	while (format[i] && charcheck(format[i]))
 	{
 		if (format[i] == '.')
 			print.dot = 'A';
@@ -42,11 +47,8 @@ t_flags	parce(const char *format, int i)
 	while (format[i] != '%' ? format[i] != '%' : 0)
 		i--;
 	++i;
-	while (format[i] && !(format[i] > '0' && format[i] <= '9') && format[i] != '.' &&
-	(format[i] != 'i' && format[i] != 'd' && format[i]
-	!= 's' && format[i] != '%' && format[i] != 'c' && format[i] != 'p' &&
-	format[i] != 'o' && format[i] != 'u' && format[i] != 'u' && format[i]
-	!= 'x' && format[i] != 'X' && format[i] != 'f'))
+	while (format[i] && !(format[i] > '0' && format[i] <= '9') &&
+	format[i] != '.' && charcheck(format[i]))
 	{
 		if (format[i] == '-')
 			print.minus = 'A';
@@ -72,7 +74,7 @@ t_flags	parce(const char *format, int i)
 
 int		flag_mngr(va_list va, t_flags print)
 {
-	if (print.type == 'd' || print.type == 'i')
+	if (print.type == 'd' || print.type == 'i' || print.type == 'D')
 	{
 		if (print.flag == 'l')
 			put_int(ft_itoa((intmax_t)va_arg(va, long)), print);
@@ -85,7 +87,7 @@ int		flag_mngr(va_list va, t_flags print)
 		else
 			put_int(ft_itoa((intmax_t)va_arg(va, int)), print);
 	}
-	else if (print.type == 'u')
+	else if (print.type == 'u' || print.type == 'U')
 	{
 		if (print.flag == 'l')
 			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long))), print, '0');
@@ -98,17 +100,17 @@ int		flag_mngr(va_list va, t_flags print)
 		else
 			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, unsigned int))), print, '0');
 	}
-	else if (print.type == 's')
+	else if (print.type == 's' || print.type == 'S')
 		putst(va_arg(va, char *), print);
 	else if (print.type == '%')
 	{
 		put_char('%', print);
 	}
-	else if (print.type == 'c')
+	else if (print.type == 'c' || print.type == 'C')
 		put_char(va_arg(va, int), print);
 	else if (print.type == 'p')
 		ft_putaddr((int)va_arg(va, void *), 0, print);
-	else if (print.type == 'o')
+	else if (print.type == 'o' || print.type == 'o')
 		put_int_unsigned(base_10_trans(va_arg(va, unsigned int), 8, print), print, '1');
 	else if (print.type == 'x' || print.type == 'X')
 	{
@@ -124,7 +126,7 @@ int		flag_mngr(va_list va, t_flags print)
 			put_int_unsigned(base_16_trans((uintmax_t)((size_t)va_arg(va, unsigned int)), (print.type == 'x' ? 0 : 1), print), print, '2');
 	}
 	else if (print.type == 'f')
-		atod(va_arg(va, double));
+		put_int(ft_dtoa(va_arg(va, double), &print), print);
 	return (0);
 }
 
@@ -161,13 +163,8 @@ int		ft_printf(const char *format, ...)
 /*int		main(void)
 {
 	char *s;
-	ft_printf("[%5.2x]\n", 5427);
-	ft_printf("[%#8x]\n", 42);
-	ft_printf("[%#08x]\n", 42);
-	ft_printf("[%X]\n", 4294967296);
-	printf("[%5.2x]\n", 5427);
-	printf("[%#8x]\n", 42);
-	printf("[%#08x]\n", 42);
-	printf("[%X]\n", 4294967296);
+	printf("toto%.0d et %+.i et  %   .0D !!!\n", 0, 0, 0);
+	ft_printf("toto%.0d et %+.i et  %   .0D !!!", 0, 0, 0);
+	
 	return (0);
 }*/
