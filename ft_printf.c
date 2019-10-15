@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:15 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/14 21:52:28 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 17:19:41 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_flags	parce(const char *format, int i)
 		print.flag = 'h';
 	print.type = format[i];
 	print.index = i;
+	i -= (print.type == '%' ? 1 : 0);
 	while (format[i] != '%' ? format[i] != '%' : 0)
 		i--;
 	++i;
@@ -85,24 +86,45 @@ int		flag_mngr(va_list va, t_flags print)
 			put_int(ft_itoa((intmax_t)va_arg(va, int)), print);
 	}
 	else if (print.type == 'u')
-		put_int_unsigned(ft_itoa_unsigned((uintmax_t)va_arg(va, size_t)), print);
+	{
+		if (print.flag == 'l')
+			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long))), print, '0');
+		else if (print.flag == 'L')
+			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long long))), print, '0');
+		else if (print.flag == 'h')
+			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((short)va_arg(va, int))), print, '0');
+		else if (print.flag == 'H')
+			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((char)va_arg(va, int))), print, '0');
+		else
+			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, unsigned int))), print, '0');
+	}
 	else if (print.type == 's')
 		putst(va_arg(va, char *), print);
 	else if (print.type == '%')
 	{
-		g_count++;
-		ft_putchar('%');
+		put_char('%', print);
 	}
 	else if (print.type == 'c')
-		ft_putchar(va_arg(va, int));
+		put_char(va_arg(va, int), print);
 	else if (print.type == 'p')
 		ft_putaddr((int)va_arg(va, void *), 0, print);
 	else if (print.type == 'o')
-		put_int_unsigned(base_10_trans(va_arg(va, unsigned int), 8), print);
-	else if (print.type == 'x')
-		base_16_trans(va_arg(va, unsigned int), 0, print);
-	else if (print.type == 'X')
-		base_16_trans(va_arg(va, unsigned int), 1, print);
+		put_int_unsigned(base_10_trans(va_arg(va, unsigned int), 8, print), print, '1');
+	else if (print.type == 'x' || print.type == 'X')
+	{
+		if (print.flag == 'l')
+			put_int_unsigned(base_16_trans((uintmax_t)((size_t)va_arg(va, long)), (print.type == 'x' ? 0 : 1), print), print, '2');
+		else if (print.flag == 'L')
+			put_int_unsigned(base_16_trans((uintmax_t)((size_t)va_arg(va, long long)), (print.type == 'x' ? 0 : 1), print), print, '2');
+		else if (print.flag == 'h')
+			put_int_unsigned(base_16_trans((uintmax_t)((short)va_arg(va, int)), (print.type == 'x' ? 0 : 1), print), print, '2');
+		else if (print.flag == 'H')
+			put_int_unsigned(base_16_trans((uintmax_t)((char)va_arg(va, int)), (print.type == 'x' ? 0 : 1), print), print, '2');
+		else
+			put_int_unsigned(base_16_trans((uintmax_t)((size_t)va_arg(va, unsigned int)), (print.type == 'x' ? 0 : 1), print), print, '2');
+	}
+	else if (print.type == 'f')
+		atod(va_arg(va, double));
 	return (0);
 }
 
@@ -139,11 +161,13 @@ int		ft_printf(const char *format, ...)
 /*int		main(void)
 {
 	char *s;
-
-	s = "sda";
-	ft_printf("%hhd", -129);
-	ft_printf("%ld", 2147483647);
-	printf("@moulitest: [%.d] [%.0d]\n", 0, 0);
-	printf("@moulitest: [%5.d] [%5.0d]\n", 0, 0);
+	ft_printf("[%5.2x]\n", 5427);
+	ft_printf("[%#8x]\n", 42);
+	ft_printf("[%#08x]\n", 42);
+	ft_printf("[%X]\n", 4294967296);
+	printf("[%5.2x]\n", 5427);
+	printf("[%#8x]\n", 42);
+	printf("[%#08x]\n", 42);
+	printf("[%X]\n", 4294967296);
 	return (0);
 }*/

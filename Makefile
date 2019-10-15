@@ -18,7 +18,8 @@ FILES 		= 	ft_printf.c\
 				ft_memalloc.c\
 				ft_bzero.c\
 				putst.c\
-				ft_strcmp.c
+				ft_strcmp.c\
+				put_char.c
 				
 OBJ			= $(patsubst %.c, %.o, $(FILES))
 FLAGS		=  -Wall -Werror -Wextra

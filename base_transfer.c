@@ -6,13 +6,13 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 10:45:09 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/13 20:04:45 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 17:04:22 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*base_10_trans(unsigned int n, int base)
+char	*base_10_trans(unsigned int n, int base, t_flags print)
 {
 	char			*str;
 	unsigned int 	i;
@@ -20,6 +20,8 @@ char	*base_10_trans(unsigned int n, int base)
 
 	i = n;
 	len = 0;
+	if (!n)
+		return (print.hash || !(print.dot && !print.precision) ? "0" : "");
 	while (i != 0)
 	{
 		i /= base;
@@ -32,17 +34,20 @@ char	*base_10_trans(unsigned int n, int base)
 		str[i++] = '0' + n % base;
 		n /= base;
 	}
+	if (print.hash)
+		ft_swapfree((void**)&str, ft_strjoin(str, "0"));
 	ft_strrev(str);
-	free(str);
 	return (str);
 }
 
-void	base_16_trans(int n, int up, t_flags print)
+char	*base_16_trans(uintmax_t n, int up, t_flags print)
 {
 	char			*str;
-	unsigned int 	i;
-	unsigned int	len;
+	uintmax_t 	i;
+	uintmax_t	len;
 
+	if (!n)
+		return ((print.hash && print.precision) || !(print.dot && !print.precision) ? "0" : "");
 	i = n;
 	len = 0;
 	while (i != 0)
@@ -71,7 +76,10 @@ void	base_16_trans(int n, int up, t_flags print)
 			str[i++] = (up ? 'F' : 'f');
 		n /= 16;
 	}
-	put_int_unsigned(ft_strrev(str), print);
+	ft_strrev(str);
+	if (print.hash)
+		ft_swapfree((void**)&str, ft_strjoin((up ? "0X" : "0x"), str));
+	return (str);
 }
 
 void	ft_putaddr(int n, int up, t_flags print)
@@ -109,5 +117,5 @@ void	ft_putaddr(int n, int up, t_flags print)
 		n /= 16;
 	}
 	ft_swapfree((void**)&str, ft_strjoin(str, "0x10"));
-	put_int_unsigned(str, print);
+	put_int_unsigned(str, print, '0');
 }

@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:30 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/14 21:38:56 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 17:04:37 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef struct 	g_flags
 }				t_flags;
 
 int		ft_printf(const char *format, ...);
-char	*base_10_trans(unsigned int n, int base);
-void	base_16_trans(int n, int up, t_flags print);
+char	*base_10_trans(unsigned int n, int base, t_flags print);
+char	*base_16_trans(uintmax_t n, int up, t_flags print);
 void	ft_putaddr(int n, int up, t_flags print);
 void	ft_putchar(char c);
 void	ft_putnbr_unsigned(unsigned int n);
@@ -50,7 +50,7 @@ int		ft_atoi(const char *str);
 char		*ft_itoa(intmax_t n);
 void	put_int(char *str, t_flags print);
 t_flags init_print();
-void	put_int_unsigned(char *str, t_flags print);
+void	put_int_unsigned(char *str, t_flags print, char hash);
 char	*ft_itoa_unsigned(uintmax_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_swapfree(void **ptr, void *ptr2);
@@ -58,5 +58,6 @@ void	*ft_memalloc(size_t size);
 void	ft_bzero(void *s, size_t n);
 void	putst(char *str, t_flags print);
 int		ft_strcmp(const char *s1, const char *s2);
+void	put_char(char c, t_flags print);
 
 #endif
