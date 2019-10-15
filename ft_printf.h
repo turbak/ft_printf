@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:30 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 20:21:18 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 22:23:31 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ void	*ft_memalloc(size_t size);
 void	ft_bzero(void *s, size_t n);
 void	putst(char *str, t_flags print);
 int		ft_strcmp(const char *s1, const char *s2);
-void	put_char(char c, t_flags print);
+void	put_char(unsigned int c, t_flags print);
 char	*ft_dtoa(double n, t_flags *print);
 int		charcheck(char c);
+void    ft_unicode(unsigned int c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 10:45:09 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 17:04:22 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 22:18:11 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	ft_putaddr(int n, int up, t_flags print)
 			str[i++] = (up ? 'F' : 'f');
 		n /= 16;
 	}
+	ft_strrev(str);
 	ft_swapfree((void**)&str, ft_strjoin(str, "0x10"));
 	put_int_unsigned(str, print, '0');
 }

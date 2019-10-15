@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 20:48:14 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 14:51:47 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 22:22:40 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	putst(char *str, t_flags print)
 	{
 		while (i < len)
 		{
-			write(1, &str[i], 1);
+			ft_unicode(str[i]);
 			i++;
 			print.width--;
 			g_count++;
@@ -51,7 +51,7 @@ void	putst(char *str, t_flags print)
 		}
 		while (i < len)
 		{
-			write(1, &str[i], 1);
+			ft_unicode(str[i]);
 			i++;
 			g_count++;
 		}

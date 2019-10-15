@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:15 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 20:28:06 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 22:27:28 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ int		flag_mngr(va_list va, t_flags print)
 	else if (print.type == 'c' || print.type == 'C')
 		put_char(va_arg(va, int), print);
 	else if (print.type == 'p')
-		ft_putaddr((int)va_arg(va, void *), 0, print);
+	{
+		print.hash = 'A';
+		put_int_unsigned(base_16_trans((uintmax_t)va_arg(va, void *), 0, print), print, '2');
+	}
 	else if (print.type == 'o' || print.type == 'o')
 		put_int_unsigned(base_10_trans(va_arg(va, unsigned int), 8, print), print, '1');
 	else if (print.type == 'x' || print.type == 'X')
@@ -163,8 +166,9 @@ int		ft_printf(const char *format, ...)
 /*int		main(void)
 {
 	char *s;
-	printf("toto%.0d et %+.i et  %   .0D !!!\n", 0, 0, 0);
-	ft_printf("toto%.0d et %+.i et  %   .0D !!!", 0, 0, 0);
-	
+	s = malloc(32);
+	s++;
+	printf("%S\n", "г");
+	ft_printf("%S\n", "г");
 	return (0);
 }*/

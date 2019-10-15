@@ -6,18 +6,18 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:41:26 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 14:48:30 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/15 22:23:18 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	put_char(char c, t_flags print)
+void	put_char(unsigned int c, t_flags print)
 {
 	print.width--;
 	if (print.minus)
 	{
-		write(1, &c, 1);
+		ft_unicode(c);
 		g_count++;
 		while (print.width > 0)
 		{
@@ -34,7 +34,7 @@ void	put_char(char c, t_flags print)
 			print.width--;
 			g_count++;
 		}
-		write(1, &c, 1);
+		ft_unicode(c);
 		g_count++;
 	}
 }
