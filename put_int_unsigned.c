@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 19:25:29 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 17:01:36 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:33:48 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ static void	itoa_uns(char *str, uintmax_t nb, uintmax_t i)
 	}
 }
 
-char		*ft_itoa_unsigned(uintmax_t n)
+char		*ft_itoa_unsigned(uintmax_t n, t_flags print)
 {
 	uintmax_t				i;
 	uintmax_t	buf;
 	char				*str;
 	uintmax_t	nb;
 
+	if (!n)
+		return (print.dot && !print.precision ? "" : "0");
 	nb = (uintmax_t)n;
 	i = 0;
 	buf = nb;
@@ -61,9 +63,9 @@ void	put_int_unsigned(char *str, t_flags print, char hash)
 		i += 2;
 		g_count += 2;
 	}
-	if (print.precision || print.minus)
+	if (print.precision || print.dot || print.minus)
 		print.zero = '\0';
-	print.width -= (print.precision && hash != '2' ? print.precision : len);
+	print.width -= (print.precision > len && hash != '2' ? print.precision : len);
 	print.precision -= len - (str[i] == '-' ? 1 : 0);
 	if (print.minus)
 	{
@@ -120,4 +122,6 @@ void	put_int_unsigned(char *str, t_flags print, char hash)
 			g_count++;
 		}
 	}
+	if (!(*str == '0' && !str[1]) && *str)
+		free(str);
 }

@@ -6,13 +6,13 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:41:26 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 22:23:18 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/16 14:43:08 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	put_char(unsigned int c, t_flags print)
+void	put_char(wchar_t c, t_flags print)
 {
 	print.width--;
 	if (print.minus)

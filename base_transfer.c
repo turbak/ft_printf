@@ -6,16 +6,16 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 10:45:09 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 22:18:11 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/16 19:43:08 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*base_10_trans(unsigned int n, int base, t_flags print)
+char	*base_10_trans(uintmax_t n, int base, t_flags print)
 {
 	char			*str;
-	unsigned int 	i;
+	uintmax_t 		i;
 	int				len;
 
 	i = n;

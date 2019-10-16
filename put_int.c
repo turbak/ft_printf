@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 15:36:32 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/14 19:47:28 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/16 19:02:07 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	put_int(char *str, t_flags print)
 	int i;
 
 	if (!print.precision && print.dot && !ft_strcmp("0", str))
+	{
+		free(str);
 		str = "";
+	}
 	i = 0;
 	len = ft_strlen(str);
 	if (print.precision || print.minus)
@@ -32,14 +35,12 @@ void	put_int(char *str, t_flags print)
 		print.space = '\0';
 	print.width -= (print.precision ? print.precision : len);
 	print.precision -= len - (str[i] == '-' ? 1 : 0);
-	//print.width = (print.minus ? print.width : print.width - ft_abs(print.precision));
 	if (print.space && str[i] != '-' && !print.plus)
 	{
 		write(1, " ", 1);
 		g_count++;
 		print.width--;
 	}
-	//print.width = ((print.plus || print.space) && print.flag != 'H' ? print.width - 1 : print.width);
 	if (print.minus)
 	{
 		if (str[i] == '-')
@@ -128,4 +129,6 @@ void	put_int(char *str, t_flags print)
 			g_count++;
 		}
 	}
+	if (*str)
+		free(str);
 }
