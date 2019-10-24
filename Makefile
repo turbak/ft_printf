@@ -21,7 +21,8 @@ FILES 		= 	ft_printf.c\
 				ft_strcmp.c\
 				put_char.c\
 				ft_dtoa.c\
-				ft_putchar_unicode.c
+				ft_putchar_unicode.c\
+				put_16x.c
 				
 OBJ			= $(patsubst %.c, %.o, $(FILES))
 FLAGS		=  -Wall -Werror -Wextra

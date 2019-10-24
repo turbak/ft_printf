@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:41:26 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/16 14:43:08 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:44:22 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 void	put_char(wchar_t c, t_flags print)
 {
-	print.width--;
+	print.width -= (c > 128 ? 2 : 1);
+	print.width -= (c > 2048 ? 1 : 0);
+	print.width -= (c > 65536 ? 1 : 0);
 	if (print.minus)
 	{
 		ft_unicode(c);
 		g_count++;
 		while (print.width > 0)
 		{
-			write(1, " ", 1);
+			write(1, (print.zero && print.type == '%' ? "0" : " "), 1);
 			print.width--;
 			g_count++;	
 		}
@@ -30,7 +32,7 @@ void	put_char(wchar_t c, t_flags print)
 	{
 		while (print.width > 0)
 		{
-			write(1, " ", 1);
+			write(1, (print.zero && print.type == '%' ? "0" : " "), 1);
 			print.width--;
 			g_count++;
 		}

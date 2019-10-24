@@ -6,14 +6,14 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 18:06:23 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/15 19:24:08 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/24 15:28:00 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-static char  *handle_dot(double nb, int precision)
+static char  *handle_dot(long double nb, int precision)
 {
 	int i;
 	char *full;
@@ -28,7 +28,7 @@ static char  *handle_dot(double nb, int precision)
 		if ((int)nb == 0)
 			full[i] = '0';
 		nb = (nb - tmp) * 10;
-		tmp = (int)nb;
+		tmp = (int)(nb + ((int)nb != 9 ? 0.1 : 0));
 		full[i] = tmp + '0';
 		i++;
 	}
@@ -36,17 +36,19 @@ static char  *handle_dot(double nb, int precision)
 	return (full);
 }
 
-char *ft_dtoa(double n, t_flags *print)
+char *ft_dtoa(long double n, t_flags *print)
 {
 	char dot[20];
 	char *full;
 	char *all;
 	size_t i;
-	double *nb;
-	double dig;
+	long double *nb;
+	long double dig;
 
+	i = (n < 0 ? 1 : 0);
+	dot[0] = (i == 1 ? '-' : '\0');
+	n = (n < 0 ? -n : n);
 	nb = &n;
-	i = 0;
 	dig = 1;
 	while ((int)((*nb) /= 10) != 0)
 		dig *= 10;

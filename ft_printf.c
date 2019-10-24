@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:15 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/16 20:32:16 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/24 19:22:29 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_flags	parce(const char *format, int i)
 			print.dot = 'A';
 		i++;
 	}
-	if (format[i - 1] == 'l' && format[i - 2] == 'l')
+	if ((format[i - 1] == 'l' && format[i - 2] == 'l') || format[i - 1] == 'L')
 		print.flag = 'L';
 	if (format[i - 1] == 'l' && format[i - 2] != 'l')
 		print.flag = 'l';
@@ -90,15 +90,15 @@ int		flag_mngr(va_list va, t_flags print)
 	else if (print.type == 'u' || print.type == 'U')
 	{
 		if (print.flag == 'l')
-			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long)), print), print, '0');
+			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long)), print), print);
 		else if (print.flag == 'L')
-			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long long)), print), print, '0');
+			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long long)), print), print);
 		else if (print.flag == 'h')
-			put_int_unsigned(ft_itoa_unsigned(((unsigned short)va_arg(va, int)), print), print, '0');
+			put_int_unsigned(ft_itoa_unsigned(((unsigned short)va_arg(va, int)), print), print);
 		else if (print.flag == 'H')
-			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((char)va_arg(va, int)), print), print, '0');
+			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((unsigned char)va_arg(va, int)), print), print);
 		else
-			put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, size_t)), print), print, '0');
+			put_int_unsigned(ft_itoa_unsigned((va_arg(va, unsigned int)), print), print);
 	}
 	else if (print.type == 'S' || (print.type == 's' && print.flag == 'l'))
 		putstl(va_arg(va, wchar_t *), print);
@@ -108,43 +108,50 @@ int		flag_mngr(va_list va, t_flags print)
 	{
 		put_char('%', print);
 	}
-	else if (print.type == 'c')
-		put_char((unsigned char)va_arg(va, int), print);
-	else if (print.type == 'C')
+	else if (print.type == 'c' && print.flag != 'l')
+		put_char((char)va_arg(va, int), print);
+	else if (print.type == 'C' || (print.type == 'c' && print.flag == 'l'))
 		put_char(va_arg(va, wchar_t), print);
 	else if (print.type == 'p')
 	{
 		print.hash = 'A';
-		put_int_unsigned(base_16_trans((uintmax_t)va_arg(va, void *), 0, print), print, '2');
+		put_16x(put_addr((uintmax_t)va_arg(va, void *), print), print);
 	}
 	else if (print.type == 'o' || print.type == 'O')
 	{
 		if (print.flag == 'l')
-			put_int_unsigned(base_10_trans(((uintmax_t)(size_t)va_arg(va, unsigned long)), 8, print), print, '1');
+			put_int_unsigned(base_10_trans(((uintmax_t)(size_t)va_arg(va, unsigned long)), 8, print), print);
 		else if (print.flag == 'L')
-			put_int_unsigned(base_10_trans((uintmax_t)((size_t)va_arg(va, long long)), 8, print), print, '1');
+			put_int_unsigned(base_10_trans((uintmax_t)((size_t)va_arg(va, long long)), 8, print), print);
 		else if (print.flag == 'h')
-			put_int_unsigned(base_10_trans((unsigned short)va_arg(va, int), 8, print), print, '1');
+			put_int_unsigned(base_10_trans((unsigned short)va_arg(va, int), 8, print), print);
 		else if (print.flag == 'H')
-			put_int_unsigned(base_10_trans((unsigned char)va_arg(va, int), 8, print), print, '1');
+			put_int_unsigned(base_10_trans((unsigned char)va_arg(va, int), 8, print), print);
 		else
-			put_int_unsigned(base_10_trans((uintmax_t)(va_arg(va, size_t)), 8, print), print, '1');
+			put_int_unsigned(base_10_trans((va_arg(va, unsigned int)), 8, print), print);
 	}
 	else if (print.type == 'x' || print.type == 'X')
 	{
+		print.hash = (print.type == 'X' && print.hash ? 'B' : print.hash);
 		if (print.flag == 'l')
-			put_int_unsigned(base_16_trans((uintmax_t)((size_t)va_arg(va, long)), (print.type == 'x' ? 0 : 1), print), print, '2');
+			put_16x(base_16_trans((uintmax_t)((size_t)va_arg(va, long)), (print.type == 'x' ? 0 : 1), &print), print);
 		else if (print.flag == 'L')
-			put_int_unsigned(base_16_trans((uintmax_t)((size_t)va_arg(va, long long)), (print.type == 'x' ? 0 : 1), print), print, '2');
+			put_16x(base_16_trans((uintmax_t)((size_t)va_arg(va, long long)), (print.type == 'x' ? 0 : 1), &print), print);
 		else if (print.flag == 'h')
-			put_int_unsigned(base_16_trans((unsigned short)va_arg(va, int), (print.type == 'x' ? 0 : 1), print), print, '2');
+			put_16x(base_16_trans((unsigned short)va_arg(va, int), (print.type == 'x' ? 0 : 1), &print), print);
 		else if (print.flag == 'H')
-			put_int_unsigned(base_16_trans((unsigned char)va_arg(va, int), (print.type == 'x' ? 0 : 1), print), print, '2');
+			put_16x(base_16_trans((unsigned char)va_arg(va, int), (print.type == 'x' ? 0 : 1), &print), print);
 		else
-			put_int_unsigned(base_16_trans((va_arg(va, size_t)), (print.type == 'x' ? 0 : 1), print), print, '2');
+			put_16x(base_16_trans(va_arg(va, unsigned int), (print.type == 'x' ? 0 : 1), &print), print);
 	}
 	else if (print.type == 'f')
-		put_int(ft_dtoa(va_arg(va, double), &print), print);
+	{
+		print.precision = (!print.precision ? 6 : print.precision);
+		if (print.flag == 'L')
+			put_int(ft_dtoa(va_arg(va, long double), &print), print);
+		else
+			put_int(ft_dtoa(va_arg(va, double), &print), print);
+	}
 	return (0);
 }
 
@@ -158,6 +165,7 @@ int		ft_printf(const char *format, ...)
 	len = ft_strlen(format);
 	i = 0;
 	va_start(va, format);
+	g_count = 0;
 	while (i < len)
 	{
 		if (format[i] == '%')
@@ -178,9 +186,13 @@ int		ft_printf(const char *format, ...)
 	return (g_count);
 }
 
-/*int		main(void)
+int		main(void)
 {
-	printf("test%---10.6x et %01hhX !!\n", 0xaabb, (unsigned char)0);
-	ft_printf("test%---10.6x et %01hhX !!\n", 0xaabb, (unsigned char)0);
+	int i;
+	char *s;
+
+	s = "123";
+	printf("%9.6ls %S", s, L"a");
+	ft_printf("%9.6ls %S", s, L"a");
 	return (0);
-}*/
+}

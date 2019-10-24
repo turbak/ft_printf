@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 10:45:09 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/16 19:43:08 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/24 14:06:46 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,17 @@ char	*base_10_trans(uintmax_t n, int base, t_flags print)
 	return (str);
 }
 
-char	*base_16_trans(uintmax_t n, int up, t_flags print)
+char	*base_16_trans(uintmax_t n, int up, t_flags *print)
 {
 	char			*str;
 	uintmax_t 	i;
 	uintmax_t	len;
 
 	if (!n)
-		return ((print.hash && print.precision) || !(print.dot && !print.precision) ? "0" : "");
+	{
+		print->hash = '\0';
+		return ((print->hash && print->precision) || !(print->dot && !print->precision) ? "0" : "");
+	}
 	i = n;
 	len = 0;
 	while (i != 0)
@@ -77,17 +80,17 @@ char	*base_16_trans(uintmax_t n, int up, t_flags print)
 		n /= 16;
 	}
 	ft_strrev(str);
-	if (print.hash)
-		ft_swapfree((void**)&str, ft_strjoin((up ? "0X" : "0x"), str));
 	return (str);
 }
 
-void	ft_putaddr(int n, int up, t_flags print)
+char	*put_addr(uintmax_t n, t_flags print)
 {
 	char			*str;
-	unsigned int 	i;
-	unsigned int	len;
+	uintmax_t 	i;
+	uintmax_t	len;
 
+	if (!n)
+		return (print.precision || !(print.dot && !print.precision) ? "0" : "");
 	i = n;
 	len = 0;
 	while (i != 0)
@@ -103,20 +106,19 @@ void	ft_putaddr(int n, int up, t_flags print)
 		if (len < 10)
 			str[i++] = '0' + n % 16;
 		else if (len == 10)
-			str[i++] = (up ? 'A' : 'a');
+			str[i++] = 'a';
 		else if (len == 11)
-			str[i++] = (up ? 'B' : 'b');
+			str[i++] = 'b';
 		else if (len == 12)
-			str[i++] = (up ? 'C' : 'c');
+			str[i++] = 'c';
 		else if (len == 13)
-			str[i++] = (up ? 'D' : 'd');
+			str[i++] = 'd';
 		else if (len == 14)
-			str[i++] = (up ? 'E' : 'e');
+			str[i++] = 'e';
 		else if (len == 15)
-			str[i++] = (up ? 'F' : 'f');
+			str[i++] = 'f';
 		n /= 16;
 	}
 	ft_strrev(str);
-	ft_swapfree((void**)&str, ft_strjoin(str, "0x10"));
-	put_int_unsigned(str, print, '0');
+	return (str);
 }

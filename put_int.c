@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 15:36:32 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/16 19:02:07 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/24 14:16:50 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	put_int(char *str, t_flags print)
 		print.zero = '\0';
 	if (print.plus)
 		print.space = '\0';
-	print.width -= (print.precision ? print.precision : len);
+	print.width -= (print.precision > len ? print.precision : len);
 	print.precision -= len - (str[i] == '-' ? 1 : 0);
 	if (print.space && str[i] != '-' && !print.plus)
 	{
