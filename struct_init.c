@@ -6,16 +6,16 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 17:58:24 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/14 19:44:27 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/25 22:54:12 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_flags init_print()
+t_flags	init_print(void)
 {
 	t_flags print;
-	
+
 	print.flag = '\0';
 	print.hash = '\0';
 	print.index = 0;

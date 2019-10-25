@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:41:26 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/24 17:44:22 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/25 21:17:03 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	put_char(wchar_t c, t_flags print)
 		{
 			write(1, (print.zero && print.type == '%' ? "0" : " "), 1);
 			print.width--;
-			g_count++;	
+			g_count++;
 		}
 	}
 	else

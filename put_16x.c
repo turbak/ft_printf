@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 13:39:31 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/24 16:03:04 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/25 21:16:09 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,62 +22,63 @@ void	put_16x(char *str, t_flags print)
 	len = ft_strlen(str) + (print.hash ? 2 : 0);
 	if (print.precision || print.dot || print.minus)
 		print.zero = '\0';
-	print.width -= (print.precision > len ? print.precision + (print.hash ? 2 : 0) : len);
-	print.precision -= len - (str[i] == '-' ? 1 : 0) - (print.hash ? 2 : 0);
-	if (print.minus)
-	{
-		write(1, (print.hash == 'A' ? "0x" : "0X"), print.hash ? 2 : 0);
-		while (print.precision > 0)
-		{
-			write(1, "0", 1);
-			print.precision--;
-			g_count++;
-		}
-		while (str[i])
-		{
-			write(1, &str[i], 1);
-			i++;
-			g_count++;
-		}
-		while (print.width > 0)
-		{
-			write(1, " ", 1);
-			print.width--;
-			g_count++;
-		}
-	}
-	else
-	{
-		if ((print.precision > 0 || print.width > 0) && print.zero && print.hash)
-			write(1, (print.hash ? "0x" : "0X"), 2);
-		while ((print.width > 0 || print.precision > 0) && print.zero)
-		{
-			write(1, "0", 1);
-			print.width--;
-			g_count++;
-			print.precision--;
-		}
-		while (print.width > 0 && !print.zero)
-		{
-			write(1, " ", 1);
-			print.width--;
-			g_count++;
-		}
-		if (!print.zero && print.hash)
-			write(1, (print.hash == 'A' ? "0x" : "0X"), 2);
-		while (print.precision > 0)
-		{
-			write(1, "0", 1);
-			print.precision--;
-			g_count++;
-		}
-		while (str[i])
-		{
-			write(1, &str[i], 1);
-			i++;
-			g_count++;
-		}
-	}
+	put_16x_minus(str, &print, i, len);
+	if (!print.minus)
+		put_16x_plus(str, print, i, len);
 	if (!(*str == '0' && !str[1]) && *str)
 		free(str);
+}
+
+void	put_16x_plus(char *str, t_flags print, int i, int len)
+{
+	if ((print.precision > 0 || print.width > 0) && print.zero && print.hash)
+		write(1, (print.hash ? "0x" : "0X"), 2);
+	while ((print.width > 0 || print.precision > 0) && print.zero)
+	{
+		write(1, "0", 1);
+		print.width--;
+		g_count++;
+		print.precision--;
+	}
+	while (print.width > 0 && !print.zero)
+	{
+		write(1, " ", 1);
+		print.width--;
+		g_count++;
+	}
+	if (!print.zero && print.hash)
+		write(1, (print.hash == 'A' ? "0x" : "0X"), 2);
+	while (print.precision > 0)
+	{
+		write(1, "0", 1);
+		print.precision--;
+		g_count++;
+	}
+	write(1, &str[i], len - (print.hash ? 2 : 0));
+	g_count += len - (print.hash ? 2 : 0);
+}
+
+void	put_16x_minus(char *str, t_flags *print, int i, int len)
+{
+	print->precision += (print->hash ? 2 : 0);
+	print->width -= (print->precision > len ? print->precision : len);
+	print->precision -= len - (str[i] == '-' ? 1 : 0);
+	if (print->minus)
+	{
+		write(1, (print->hash == 'A' ? "0x" : "0X"), print->hash ? 2 : 0);
+		while (print->precision > 0)
+		{
+			write(1, "0", 1);
+			print->precision--;
+			g_count++;
+		}
+		write(1, &str[i], len - (print->hash ? 2 : 0));
+		g_count += len - (print->hash ? 2 : 0);
+		while (print->width > 0)
+		{
+			write(1, " ", 1);
+			print->width--;
+			g_count++;
+		}
+	}
 }

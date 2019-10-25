@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 19:25:29 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/24 14:20:50 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/25 22:51:28 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void	itoa_uns(char *str, uintmax_t nb, uintmax_t i)
 char		*ft_itoa_unsigned(uintmax_t n, t_flags print)
 {
 	uintmax_t				i;
-	uintmax_t	buf;
-	char				*str;
-	uintmax_t	nb;
+	uintmax_t				buf;
+	char					*str;
+	uintmax_t				nb;
 
 	if (!n)
 		return (print.dot && !print.precision ? "" : "0");
@@ -51,66 +51,62 @@ char		*ft_itoa_unsigned(uintmax_t n, t_flags print)
 	return (str);
 }
 
-void	put_int_unsigned(char *str, t_flags print)
+void		put_int_unsigned(char *str, t_flags print)
 {
 	int len;
-	int i;
 
-	i = 0;
 	len = ft_strlen(str);
 	if (print.precision || print.dot || print.minus)
 		print.zero = '\0';
 	print.width -= (print.precision > len ? print.precision : len);
-	print.precision -= len - (str[i] == '-' ? 1 : 0);
+	print.precision -= len - (*str == '-' ? 1 : 0);
 	if (print.minus)
-	{
-		while (print.precision > 0)
-		{
-			write(1, "0", 1);
-			print.precision--;
-			g_count++;
-		}
-		while (str[i])
-		{
-			write(1, &str[i], 1);
-			i++;
-			g_count++;
-		}
-		while (print.width > 0)
-		{
-			write(1, " ", 1);
-			print.width--;
-			g_count++;
-		}
-	}
+		put_int_unsigned_minus(str, print, len);
 	else
-	{
-		while ((print.width > 0 || print.precision > 0) && print.zero)
-		{
-			write(1, "0", 1);
-			print.width--;
-			g_count++;
-			print.precision--;
-		}
-		while (print.width > 0 && !print.zero)
-		{
-			write(1, " ", 1);
-			print.width--;
-			g_count++;
-		}
-		while (print.precision > 0)
-		{
-			write(1, "0", 1);
-			print.precision--;
-			g_count++;
-		}
-		while (str[i])
-		{
-			write(1, &str[i], 1);
-			i++;
-			g_count++;
-		}
-	}
+		put_int_unsigned_plus(str, print, len);
 	if (!(*str == '0' && !str[1]) && *str)
 		free(str);
+}
+
+void		put_int_unsigned_minus(char *str, t_flags print, int len)
+{
+	while (print.precision > 0)
+	{
+		write(1, "0", 1);
+		print.precision--;
+		g_count++;
+	}
+	write(1, str, len);
+	g_count += len;
+	while (print.width > 0)
+	{
+		write(1, " ", 1);
+		print.width--;
+		g_count++;
+	}
+}
+
+void		put_int_unsigned_plus(char *str, t_flags print, int len)
+{
+	while ((print.width > 0 || print.precision > 0) && print.zero)
+	{
+		write(1, "0", 1);
+		print.width--;
+		g_count++;
+		print.precision--;
+	}
+	while (print.width > 0 && !print.zero)
+	{
+		write(1, " ", 1);
+		print.width--;
+		g_count++;
+	}
+	while (print.precision > 0)
+	{
+		write(1, "0", 1);
+		print.precision--;
+		g_count++;
+	}
+	write(1, str, len);
+	g_count += len;
 }
