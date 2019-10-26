@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:30 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/25 23:00:20 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/26 18:36:20 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_flags
 	char		size;
 	char		type;
 	char		dot;
+	char		error;
 	int			index;
 }				t_flags;
 
@@ -79,7 +80,7 @@ void			put_int_plus(char *str, t_flags print, int len, int i);
 void			put_int_plus2(char *str, t_flags print, int *i);
 void			put_int_unsigned_minus(char *str, t_flags print, int l);
 void			put_int_unsigned_plus(char *str, t_flags print, int len);
-void			putst_plus(wchar_t *str, t_flags print, int len);
-void			putstl_minus(wchar_t *str, t_flags print, int i, int len)
+void			putst_plus(char *str, t_flags print, int len);
+void			putstl_minus(wchar_t *str, t_flags print, int i, int len);
 
 #endif

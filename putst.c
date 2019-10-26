@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 20:48:14 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/25 23:01:08 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/26 18:50:37 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	putstl(wchar_t *str, t_flags print)
 
 	if (print.dot && !print.precision)
 		str = L"\0";
+	if (!str)
+		str = L"(null)";
 	len = (ft_strlenw(str) > (size_t)print.precision && print.precision ?
 	print.precision : ft_strlenw(str));
 	i = 0;
@@ -88,7 +90,7 @@ void	putstl_minus(wchar_t *str, t_flags print, int i, int len)
 	}
 }
 
-void	putst_plus(wchar_t *str, t_flags print, int len)
+void	putst_plus(char *str, t_flags print, int len)
 {
 	while (print.width > 0)
 	{

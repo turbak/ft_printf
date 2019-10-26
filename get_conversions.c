@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 21:42:27 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/25 21:42:31 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/26 18:02:33 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		get_flags(va_list va, t_flags print)
 	else if (print.type == 's')
 		putst((va_arg(va, char *)), print);
 	else if (print.type == '%')
-		put_char('%', print);
+		put_int_unsigned("%", print);
 	else if (print.type == 'c' && print.flag != 'l')
 		put_char((char)va_arg(va, int), print);
 	else if (print.type == 'C' || (print.type == 'c' && print.flag == 'l'))

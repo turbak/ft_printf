@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:15 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/25 20:52:17 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/26 19:12:26 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ t_flags	parce(const char *format, int i)
 
 	print = init_print();
 	print.precision = 0;
-	while (format[i] && charcheck(format[i]))
+	while (charcheck(format[i]))
 	{
 		if (format[i] == '.')
 			print.dot = 'A';
+		if (!format[i])
+		{
+			print.error = 'A';
+			return (print);
+		}
 		i++;
 	}
 	if ((format[i - 1] == 'l' && format[i - 2] == 'l') || format[i - 1] == 'L')
@@ -108,12 +113,16 @@ int		ft_printf(const char *format, ...)
 	i = 0;
 	va_start(va, format);
 	g_count = 0;
+	if (!format)
+		exit (-1);
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
 			i++;
 			print = parce(format, i);
+			if (print.error)
+				break ;
 			flag_mngr(va, print);
 			i = print.index + (format[i] ? 1 : 0);
 		}
@@ -134,7 +143,9 @@ int		ft_printf(const char *format, ...)
 	char *s;
 
 	s = "123";
-	ft_printf("%");
+	//printf(NULL);
+	ft_printf(NULL);
+	
 	//printf("[%d]\n", ft_printf("[%ls]", L"sd"));
 	//printf("{%d}", printf("{%ls}", L"sd"));
 	return (0);

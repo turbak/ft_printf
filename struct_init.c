@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 17:58:24 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/25 22:54:12 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/26 18:36:01 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ t_flags	init_print(void)
 	print.width = 0;
 	print.zero = 0;
 	print.dot = '\0';
+	print.error = '\0';
 	return (print);
 }

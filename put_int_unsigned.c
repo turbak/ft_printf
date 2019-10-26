@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 19:25:29 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/25 22:51:28 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/26 18:03:15 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		put_int_unsigned(char *str, t_flags print)
 		put_int_unsigned_minus(str, print, len);
 	else
 		put_int_unsigned_plus(str, print, len);
-	if (!(*str == '0' && !str[1]) && *str)
+	if (!(*str == '0' && !str[1]) && *str && *str != '%')
 		free(str);
 }
 

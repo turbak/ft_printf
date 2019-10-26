@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 13:39:31 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/25 21:16:09 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/26 18:19:21 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ void	put_16x(char *str, t_flags print)
 void	put_16x_plus(char *str, t_flags print, int i, int len)
 {
 	if ((print.precision > 0 || print.width > 0) && print.zero && print.hash)
-		write(1, (print.hash ? "0x" : "0X"), 2);
+	{
+		write(1, (print.hash && print.type != 'X' ? "0x" : "0X"), 2);
+		print.hash = '\0';
+		len -= 2;
+	}
 	while ((print.width > 0 || print.precision > 0) && print.zero)
 	{
 		write(1, "0", 1);
@@ -46,8 +50,8 @@ void	put_16x_plus(char *str, t_flags print, int i, int len)
 		print.width--;
 		g_count++;
 	}
-	if (!print.zero && print.hash)
-		write(1, (print.hash == 'A' ? "0x" : "0X"), 2);
+	if (print.hash)
+		write(1, (print.hash == 'A' && print.type != 'X' ? "0x" : "0X"), 2);
 	while (print.precision > 0)
 	{
 		write(1, "0", 1);
@@ -65,7 +69,7 @@ void	put_16x_minus(char *str, t_flags *print, int i, int len)
 	print->precision -= len - (str[i] == '-' ? 1 : 0);
 	if (print->minus)
 	{
-		write(1, (print->hash == 'A' ? "0x" : "0X"), print->hash ? 2 : 0);
+		write(1, (print->hash == 'A' && print->type != 'X' ? "0x" : "0X"), print->hash ? 2 : 0);
 		while (print->precision > 0)
 		{
 			write(1, "0", 1);
