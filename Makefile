@@ -23,7 +23,7 @@ FILES 		= 	ft_printf.c\
 				ft_dtoa.c\
 				ft_putchar_unicode.c\
 				put_16x.c\
-				get_conversions.c
+				get_conversions.c\
 				
 OBJ			= $(patsubst %.c, %.o, $(FILES))
 FLAGS		=  -Wall -Werror -Wextra

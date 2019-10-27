@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:15 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/26 19:12:26 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/27 15:47:35 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_flags	parce(const char *format, int i)
 	{
 		while (format[i] != '.')
 			i++;
-		print.precision = ft_atoi(&format[i + 1]);
+		print.precision = (ft_atoi(&format[i + 1]) == 0 && print.type == 'f' ? -1 : ft_atoi(&format[i + 1]));
 	}
 	return (print);
 }
@@ -95,7 +95,6 @@ int		flag_mngr(va_list va, t_flags print)
 	}
 	else if (print.type == 'f')
 	{
-		print.precision = (!print.precision ? 6 : print.precision);
 		if (print.flag == 'L')
 			put_int(ft_dtoa(va_arg(va, long double), &print), print);
 		else
@@ -136,18 +135,3 @@ int		ft_printf(const char *format, ...)
 	va_end(va);
 	return (g_count);
 }
-
-/*int		main(void)
-{
-	int i;
-	char *s;
-
-	s = "123";
-	//printf(NULL);
-	ft_printf(NULL);
-	
-	//printf("[%d]\n", ft_printf("[%ls]", L"sd"));
-	//printf("{%d}", printf("{%ls}", L"sd"));
-	return (0);
-}
-*/
