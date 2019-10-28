@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:30 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/28 15:39:12 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/28 17:19:39 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void			putst(char *str, t_flags print);
 int				ft_strcmp(const char *s1, const char *s2);
 void			put_char(wchar_t c, t_flags print);
 char			*ft_dtoa(long double n, t_flags *print);
-int				charcheck(char c);
 void			ft_unicode(wchar_t c);
 void			putstl(wchar_t *str, t_flags print);
 size_t			ft_strlenw(const wchar_t *s);
@@ -83,6 +82,7 @@ void			put_int_unsigned_plus(char *str, t_flags print, int len);
 void			putst_plus(char *str, t_flags print, int len);
 void			putstl_minus(wchar_t *str, t_flags print, int i, int len);
 void			putstl_plus(wchar_t *str, t_flags print, int i, int len);
-long double		round_of(double nb, int power);
+long double		round_of(long double nb, int power);
+t_flags			parce(const char *format, int i);
 
 #endif

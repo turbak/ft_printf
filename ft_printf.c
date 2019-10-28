@@ -6,78 +6,14 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:58:15 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/27 15:47:35 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/28 17:11:06 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-int		charcheck(char c)
-{
-	return (c != 'i' && c != 'd' && c != 's' && c != 'S'
-	&& c != '%' && c != 'c' && c != 'p' && c != 'U' &&
-	c != 'o' && c != 'u' && c != 'u' && c != 'x' && c != 'C'
-	&& c != 'X' && c != 'f' && c != 'D' && c != 'O');
-}
-
-t_flags	parce(const char *format, int i)
-{
-	t_flags	print;
-
-	print = init_print();
-	print.precision = 0;
-	while (charcheck(format[i]))
-	{
-		if (format[i] == '.')
-			print.dot = 'A';
-		if (!format[i])
-		{
-			print.error = 'A';
-			return (print);
-		}
-		i++;
-	}
-	if ((format[i - 1] == 'l' && format[i - 2] == 'l') || format[i - 1] == 'L')
-		print.flag = 'L';
-	else if (format[i - 1] == 'l' && format[i - 2] != 'l')
-		print.flag = 'l';
-	else if (format[i - 1] == 'h' && format[i - 2] == 'h')
-		print.flag = 'H';
-	else if (format[i - 1] == 'h' && format[i - 2] != 'h')
-		print.flag = 'h';
-	print.type = format[i];
-	print.index = i;
-	i -= (print.type == '%' ? 1 : 0);
-	while (format[i] != '%' ? format[i] != '%' : 0)
-		i--;
-	++i;
-	while (format[i] && !(format[i] > '0' && format[i] <= '9') &&
-	format[i] != '.' && charcheck(format[i]))
-	{
-		if (format[i] == '-')
-			print.minus = 'A';
-		if (format[i] == '+')
-			print.plus = 'A';
-		if (format[i] == '0')
-			print.zero = 'A';
-		if (format[i] == '#')
-			print.hash = 'A';
-		if (format[i] == ' ')
-			print.space = 'A';
-		i++;
-	}
-	print.width = (format[i] >= '0' && format[i] <= '9' ? ft_atoi(&format[i]) : 0);
-	if (print.dot)
-	{
-		while (format[i] != '.')
-			i++;
-		print.precision = (ft_atoi(&format[i + 1]) == 0 && print.type == 'f' ? -1 : ft_atoi(&format[i + 1]));
-	}
-	return (print);
-}
-
-int		flag_mngr(va_list va, t_flags print)
+int			flag_mngr(va_list va, t_flags print)
 {
 	if (get_flags(va, print))
 		return (0);
@@ -103,17 +39,10 @@ int		flag_mngr(va_list va, t_flags print)
 	return (0);
 }
 
-int		ft_printf(const char *format, ...)
+static void	read_string(const char *format, int i, va_list va)
 {
-	int		i;
-	va_list va;
 	t_flags print;
 
-	i = 0;
-	va_start(va, format);
-	g_count = 0;
-	if (!format)
-		exit (-1);
 	while (format[i])
 	{
 		if (format[i] == '%')
@@ -132,6 +61,19 @@ int		ft_printf(const char *format, ...)
 			g_count++;
 		}
 	}
+}
+
+int			ft_printf(const char *format, ...)
+{
+	int		i;
+	va_list va;
+
+	i = 0;
+	va_start(va, format);
+	g_count = 0;
+	if (!format)
+		exit(-1);
+	read_string(format, i, va);
 	va_end(va);
 	return (g_count);
 }

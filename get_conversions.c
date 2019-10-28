@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 21:42:27 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/28 15:44:04 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/28 17:09:46 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,41 +50,56 @@ void	get_ints(va_list va, t_flags print)
 void	get_unsigned(va_list va, t_flags print)
 {
 	if (print.flag == 'l')
-		put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long)), print), print);
+		put_int_unsigned(ft_itoa_unsigned(
+		(uintmax_t)((size_t)va_arg(va, long)), print), print);
 	else if (print.flag == 'L')
-		put_int_unsigned(ft_itoa_unsigned((uintmax_t)((size_t)va_arg(va, long long)), print), print);
+		put_int_unsigned(ft_itoa_unsigned(
+		(uintmax_t)((size_t)va_arg(va, long long)), print), print);
 	else if (print.flag == 'h')
-		put_int_unsigned(ft_itoa_unsigned(((unsigned short)va_arg(va, int)), print), print);
+		put_int_unsigned(ft_itoa_unsigned((
+		(unsigned short)va_arg(va, int)), print), print);
 	else if (print.flag == 'H')
-		put_int_unsigned(ft_itoa_unsigned((uintmax_t)((unsigned char)va_arg(va, int)), print), print);
+		put_int_unsigned(ft_itoa_unsigned((uintmax_t)(
+		(unsigned char)va_arg(va, int)), print), print);
 	else
-		put_int_unsigned(ft_itoa_unsigned((va_arg(va, unsigned int)), print), print);
+		put_int_unsigned(ft_itoa_unsigned((
+		va_arg(va, unsigned int)), print), print);
 }
 
 void	get_o(va_list va, t_flags print)
 {
-	if (print.flag == 'l')
-		put_int_unsigned(base_10_trans(((uintmax_t)(size_t)va_arg(va, unsigned long)), 8, print), print);
-	else if (print.flag == 'L')
-		put_int_unsigned(base_10_trans((uintmax_t)((size_t)va_arg(va, long long)), 8, print), print);
+	if (print.flag == 'L')
+		put_int_unsigned(base_10_trans(
+		(uintmax_t)((size_t)va_arg(va, long long)), 8, print), print);
+	else if (print.flag == 'l')
+		put_int_unsigned(base_10_trans(
+		(uintmax_t)((size_t)va_arg(va, unsigned long)), 8, print), print);
 	else if (print.flag == 'h')
-		put_int_unsigned(base_10_trans((unsigned short)va_arg(va, int), 8, print), print);
+		put_int_unsigned(base_10_trans(
+		(unsigned short)va_arg(va, int), 8, print), print);
 	else if (print.flag == 'H')
-		put_int_unsigned(base_10_trans((unsigned char)va_arg(va, int), 8, print), print);
+		put_int_unsigned(base_10_trans(
+		(unsigned char)va_arg(va, int), 8, print), print);
 	else
-		put_int_unsigned(base_10_trans((va_arg(va, unsigned int)), 8, print), print);
+		put_int_unsigned(base_10_trans(
+		(va_arg(va, unsigned int)), 8, print), print);
 }
 
 void	get_x(va_list va, t_flags print)
 {
 	if (print.flag == 'l')
-			put_16x(base_16_trans((uintmax_t)((size_t)va_arg(va, long)), (print.type == 'x' ? 0 : 1), &print), print);
-		else if (print.flag == 'L')
-			put_16x(base_16_trans((uintmax_t)((size_t)va_arg(va, long long)), (print.type == 'x' ? 0 : 1), &print), print);
-		else if (print.flag == 'h')
-			put_16x(base_16_trans((unsigned short)va_arg(va, int), (print.type == 'x' ? 0 : 1), &print), print);
-		else if (print.flag == 'H')
-			put_16x(base_16_trans((unsigned char)va_arg(va, int), (print.type == 'x' ? 0 : 1), &print), print);
-		else
-			put_16x(base_16_trans(va_arg(va, unsigned int), (print.type == 'x' ? 0 : 1), &print), print);
+		put_16x(base_16_trans((uintmax_t)((size_t)va_arg(va, long)),
+		(print.type == 'x' ? 0 : 1), &print), print);
+	else if (print.flag == 'L')
+		put_16x(base_16_trans((uintmax_t)((size_t)va_arg(va, long long)),
+		(print.type == 'x' ? 0 : 1), &print), print);
+	else if (print.flag == 'h')
+		put_16x(base_16_trans((unsigned short)va_arg(va, int),
+		(print.type == 'x' ? 0 : 1), &print), print);
+	else if (print.flag == 'H')
+		put_16x(base_16_trans((unsigned char)va_arg(va, int),
+		(print.type == 'x' ? 0 : 1), &print), print);
+	else
+		put_16x(base_16_trans(va_arg(va, unsigned int),
+		(print.type == 'x' ? 0 : 1), &print), print);
 }
