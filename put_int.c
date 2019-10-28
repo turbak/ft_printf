@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 15:36:32 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/28 14:58:44 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/28 15:22:28 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,22 @@ void	put_int(char *str, t_flags print)
 	int len;
 	int i;
 
-	if (!print.precision && print.dot && !ft_strcmp("0", str) && print.type != 'f')
+	if (!print.precision && print.dot && !ft_strcmp("0", str) &&
+	print.type != 'f')
 	{
 		free(str);
 		str = "";
 	}
 	i = 0;
-	g_count += (print.plus || str[i] == '-' ? 1 : 0);
+	g_count += (print.space || print.plus || str[i] == '-' ? 1 : 0);
 	len = ft_strlen(str) - (*str == '-' ? 1 : 0);
-	if (print.precision || print.minus)
-		print.zero = '\0';
+	print.zero = (print.precision || print.minus ? '\0' : print.zero);
 	print.width -= (print.precision > len ? print.precision : len);
 	print.width -= ((print.plus || str[i] == '-') ? 1 : 0);
 	print.precision -= len;
 	if (print.space && str[i] != '-' && !print.plus)
 	{
 		write(1, " ", 1);
-		g_count++;
 		print.width--;
 	}
 	(print.minus ? put_int_minus(str, print, len, i)

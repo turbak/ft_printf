@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 20:48:14 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/27 14:34:01 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/28 15:40:03 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,7 @@ void	putstl(wchar_t *str, t_flags print)
 	if (print.minus)
 		putstl_minus(str, print, i, len);
 	else
-	{
-		while (print.width > 0)
-		{
-			if (print.zero)
-				write(1, "0", 1);
-			else
-				write(1, " ", 1);
-			print.width--;
-			g_count++;
-		}
-		while (i < len)
-		{
-			ft_unicode((wchar_t)str[i]);
-			i++;
-			g_count++;
-		}
-	}
+		putstl_plus(str, print, i, len);
 }
 
 void	putst(char *str, t_flags print)
@@ -55,7 +39,8 @@ void	putst(char *str, t_flags print)
 		str = "";
 	if (!str)
 		str = "(null)";
-	len = (ft_strlen(str) > (size_t)print.precision && print.precision ? print.precision : ft_strlen(str));
+	len = (ft_strlen(str) > (size_t)print.precision && print.precision ?
+	print.precision : ft_strlen(str));
 	print.width = (print.minus ? print.width : print.width - len);
 	if (print.minus)
 	{
@@ -103,4 +88,23 @@ void	putst_plus(char *str, t_flags print, int len)
 	}
 	write(1, str, len);
 	g_count += len;
+}
+
+void	putstl_plus(wchar_t *str, t_flags print, int i, int len)
+{
+	while (print.width > 0)
+	{
+		if (print.zero)
+			write(1, "0", 1);
+		else
+			write(1, " ", 1);
+		print.width--;
+		g_count++;
+	}
+	while (i < len)
+	{
+		ft_unicode((wchar_t)str[i]);
+		i++;
+		g_count++;
+	}
 }
