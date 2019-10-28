@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 15:36:32 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/27 14:45:41 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/28 14:58:44 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ void	put_int(char *str, t_flags print)
 	int len;
 	int i;
 
-	if (!print.precision && print.dot && !ft_strcmp("0", str))
+	if (!print.precision && print.dot && !ft_strcmp("0", str) && print.type != 'f')
 	{
 		free(str);
 		str = "";
 	}
 	i = 0;
+	g_count += (print.plus || str[i] == '-' ? 1 : 0);
 	len = ft_strlen(str) - (*str == '-' ? 1 : 0);
 	if (print.precision || print.minus)
 		print.zero = '\0';
@@ -45,11 +46,11 @@ void	put_int_minus(char *str, t_flags print, int len, int i)
 {
 	if (str[i] == '-')
 	{
-		write(1, "-", (g_count += 1));
+		write(1, "-", 1);
 		i++;
 	}
 	if (print.plus && *str != '-')
-		write(1, "+", (g_count += 1));
+		write(1, "+", 1);
 	while (print.precision > 0)
 	{
 		write(1, "0", 1);
@@ -72,14 +73,12 @@ void	put_int_plus(char *str, t_flags print, int len, int i)
 	{
 		print.plus = '\0';
 		write(1, (str[i] == '-' ? "-" : "+"), 1);
-		g_count++;
 		i += (str[i] == '-' ? 1 : 0);
 	}
 	if ((print.plus || str[i] == '-') && (print.precision <= 0
 	&& print.width <= 0))
 	{
 		write(1, (str[i] == '-' ? "-" : "+"), 1);
-		g_count++;
 		i += (str[i] == '-' ? 1 : 0);
 		print.plus = '\0';
 	}
@@ -106,7 +105,6 @@ void	put_int_plus2(char *str, t_flags print, int *i)
 	if (print.plus || str[*i] == '-')
 	{
 		write(1, (str[*i] == '-' ? "-" : "+"), 1);
-		g_count++;
 		*i += (str[*i] == '-' ? 1 : 0);
 	}
 	while (print.precision > 0)

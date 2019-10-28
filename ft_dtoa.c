@@ -6,7 +6,7 @@
 /*   By: cauranus <cauranus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 18:06:23 by cauranus          #+#    #+#             */
-/*   Updated: 2019/10/27 20:59:08 by cauranus         ###   ########.fr       */
+/*   Updated: 2019/10/28 15:00:07 by cauranus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char *ft_dtoa(long double n, t_flags *print)
 
 	print->precision = (!print->precision && !print->dot ? 6 : print->precision);
 	round = round_of(0.5, print->precision);
+	ft_bzero(dot, 20);
 	i = (n < 0 ? 1 : 0);
 	dot[0] = (i == 1 ? '-' : '\0');
 	n = (n < 0 ? -n : n);
@@ -67,7 +68,7 @@ char *ft_dtoa(long double n, t_flags *print)
 	while ((int)((*nb) /= 10) != 0)
 		dig *= 10;
 	(*nb) *= dig * 10;
-	while ((int)(*nb) != 0)
+	while ((int)dig != 0)
 	{
 		dot[i] = (char)((*nb) / dig + '0');
 		*nb -= (int)((*nb) / dig) * dig;
@@ -77,7 +78,7 @@ char *ft_dtoa(long double n, t_flags *print)
 	dot[i] = '\0';
 	full = handle_dot(n, *print);
 	dot[1] = (dot[0] == '-' && !dot[1] ? '0' : dot[1]);
-	all = ft_strjoin((!*dot ? "0" : dot), (print->precision == -1 && !print->hash ? "" : full));
+	all = ft_strjoin((!dot[0] ? "0" : dot), (print->precision == -1 && !print->hash ? "" : full));
 	print->precision = 0;
 	return (all);
 }
